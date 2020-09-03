@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.omzer.photosviewer.R
+import com.omzer.photosviewer.activity.MainActivity
 import kotlinx.android.synthetic.main.photos_grid_fragment.*
 import models.PhotoModel
 import viewmodels.PhotosGridViewModel
@@ -18,9 +19,13 @@ class PhotosGridFragment : Fragment() {
     private lateinit var viewModel: PhotosGridViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, b: Bundle?): View? {
+        return inflater.inflate(R.layout.photos_grid_fragment, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         init()
         observe()
-        return inflater.inflate(R.layout.photos_grid_fragment, container, false)
     }
 
     private fun init() {
@@ -54,7 +59,7 @@ class PhotosGridFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        requireActivity().finish()
+        (requireActivity() as MainActivity).showFragment(FavoritePhotosFragment(), true)
         return super.onOptionsItemSelected(item)
     }
 

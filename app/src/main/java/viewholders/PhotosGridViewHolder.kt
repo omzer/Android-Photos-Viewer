@@ -5,6 +5,9 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import app.App
+import com.like.IconType
+import com.like.LikeButton
+import com.like.OnLikeListener
 import com.omzer.photosviewer.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.photo_card.view.*
@@ -16,7 +19,23 @@ class PhotosGridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun setData(photoModel: PhotoModel) {
         setAuthor(photoModel.author)
         setImage(photoModel.downloadUrl)
+        setFavorite(photoModel)
         setClickListener()
+    }
+
+    private fun setFavorite(photoModel: PhotoModel) {
+        itemView.favorite.isLiked = photoModel.isFavorite
+        itemView.favorite.setOnLikeListener(object : OnLikeListener {
+            override fun liked(likeButton: LikeButton?) {
+                photoModel.isFavorite = true
+            }
+
+            override fun unLiked(likeButton: LikeButton?) {
+                photoModel.isFavorite = false
+            }
+
+        })
+
     }
 
     private fun setAuthor(author: String) {

@@ -8,5 +8,6 @@ data class PhotoModel(
     @SerializedName("width") val width: Int,
     @SerializedName("height") val height: Int,
     @SerializedName("url") val url: String,
-    @SerializedName("download_url") val downloadUrl: String
+    @SerializedName("download_url") val downloadUrl: String,
+    var isFavorite: Boolean
 )

@@ -32,6 +32,24 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             tools:text="Omar Sabri" />
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="top|end"
+            android:background="@color/black_with_opacity"
+            android:rotation="45"
+            android:translationX="40dp" />
+
+        <com.like.LikeButton
+            android:id="@+id/favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_margin="2dp"
+            android:elevation="2dp"
+            app:icon_size="10dp"
+            app:icon_type="star" />
     </FrameLayout>
 
 </androidx.cardview.widget.CardView>

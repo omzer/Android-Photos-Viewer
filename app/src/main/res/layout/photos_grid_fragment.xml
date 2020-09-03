@@ -10,7 +10,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/photosGrid"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:listitem="@layout/photo_card" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loadingIndicator"
@@ -20,6 +21,5 @@
         app:lottie_autoPlay="true"
         app:lottie_fileName="loading.json"
         app:lottie_loop="true"
-        app:lottie_speed="1.5"
-        tools:background="@color/colorAccent" />
+        app:lottie_speed="1.5" />
 </FrameLayout>

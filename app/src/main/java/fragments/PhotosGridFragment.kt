@@ -1,5 +1,6 @@
 package fragments
 
+import adapters.PhotosGridAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.omzer.photosviewer.R
 import kotlinx.android.synthetic.main.photos_grid_fragment.*
@@ -34,6 +36,9 @@ class PhotosGridFragment : Fragment() {
             return
         }
 
+        // init recycler
+        photosGrid.layoutManager = GridLayoutManager(context, 2)
+        photosGrid.adapter = PhotosGridAdapter(photos)
     }
 
     private fun showSnackbar(message: String) {

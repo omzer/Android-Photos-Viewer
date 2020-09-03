@@ -76,6 +76,8 @@ class PhotosGridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private fun onViewSingleTapped() {}
 
-    private fun onViewDoubleTapped() {}
+    private fun onViewDoubleTapped() {
+        itemView.favorite.performClick()
+    }
 
 }

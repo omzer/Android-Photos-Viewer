@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Photos Viewer</string>
+    <string name="connection_issue">There might be a connection issue, please try again later</string>
 </resources>

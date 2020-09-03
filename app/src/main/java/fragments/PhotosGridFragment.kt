@@ -2,9 +2,7 @@ package fragments
 
 import adapters.PhotosGridAdapter
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,9 +18,14 @@ class PhotosGridFragment : Fragment() {
     private lateinit var viewModel: PhotosGridViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, b: Bundle?): View? {
-        viewModel = ViewModelProvider(this).get(PhotosGridViewModel::class.java)
+        init()
         observe()
         return inflater.inflate(R.layout.photos_grid_fragment, container, false)
+    }
+
+    private fun init() {
+        viewModel = ViewModelProvider(this).get(PhotosGridViewModel::class.java)
+        setHasOptionsMenu(true)
     }
 
     private fun observe() {
@@ -43,6 +46,16 @@ class PhotosGridFragment : Fragment() {
 
     private fun showSnackbar(message: String) {
         Snackbar.make(rootLayout, message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.favorite, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        requireActivity().finish()
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onStart() {

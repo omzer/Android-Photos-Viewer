@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.omzer.photosviewer.R
-import com.omzer.photosviewer.activity.MainActivity
+import activities.MainActivity
 import kotlinx.android.synthetic.main.photos_grid_fragment.*
 import models.PhotoModel
 import viewmodels.PhotosGridViewModel

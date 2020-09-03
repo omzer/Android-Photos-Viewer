@@ -1,4 +1,4 @@
-package com.omzer.photosviewer.activity
+package activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

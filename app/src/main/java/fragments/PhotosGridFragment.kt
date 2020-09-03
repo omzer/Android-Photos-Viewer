@@ -1,5 +1,6 @@
 package fragments
 
+import activities.MainActivity
 import adapters.PhotosGridAdapter
 import android.os.Bundle
 import android.view.*
@@ -9,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.omzer.photosviewer.R
-import activities.MainActivity
 import kotlinx.android.synthetic.main.photos_grid_fragment.*
 import models.PhotoModel
 import viewmodels.PhotosGridViewModel
@@ -26,6 +26,7 @@ class PhotosGridFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
         observe()
+        viewModel.requestPhotos()
     }
 
     private fun init() {
@@ -62,10 +63,4 @@ class PhotosGridFragment : Fragment() {
         (requireActivity() as MainActivity).showFragment(FavoritePhotosFragment(), true)
         return super.onOptionsItemSelected(item)
     }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.requestPhotos()
-    }
-
 }

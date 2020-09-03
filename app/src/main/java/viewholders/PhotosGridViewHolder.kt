@@ -1,7 +1,10 @@
 package viewholders
 
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import app.App
 import com.omzer.photosviewer.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.photo_card.view.*
@@ -11,13 +14,49 @@ import models.PhotoModel
 class PhotosGridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun setData(photoModel: PhotoModel) {
-        itemView.author.text = photoModel.author
-        val img = itemView.image
+        setAuthor(photoModel.author)
+        setImage(photoModel.downloadUrl)
+        setClickListener()
+    }
+
+    private fun setAuthor(author: String) {
+        itemView.author.text = author
+    }
+
+    private fun setImage(url: String) {
         Picasso.get()
-            .load(photoModel.downloadUrl)
+            .load(url)
             .centerCrop()
             .resize(500, 500)
             .placeholder(R.color.grey_purple)
-            .into(img)
+            .into(itemView.image)
     }
+
+    private fun setClickListener() {
+        itemView.setOnTouchListener(object : View.OnTouchListener {
+            val gestureDetector = GestureDetector(
+                App.instance.baseContext,
+                object : GestureDetector.SimpleOnGestureListener() {
+                    override fun onDoubleTap(e: MotionEvent?): Boolean {
+                        onViewDoubleTapped()
+                        return super.onDoubleTap(e)
+                    }
+
+                    override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
+                        onViewSingleTapped()
+                        return super.onSingleTapConfirmed(e)
+                    }
+                })
+
+            override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                gestureDetector.onTouchEvent(event)
+                return true
+            }
+        })
+    }
+
+    private fun onViewSingleTapped() {}
+
+    private fun onViewDoubleTapped() {}
+
 }

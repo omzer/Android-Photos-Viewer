@@ -10,11 +10,13 @@ class App : Application() {
 
     companion object {
         lateinit var api: PhotosAPI
+        lateinit var instance: App
     }
 
     override fun onCreate() {
         super.onCreate()
         initAPI()
+        instance = this
     }
 
     private fun initAPI() {

@@ -1,7 +1,8 @@
 package fragments
 
 import activities.MainActivity
-import adapters.PhotosGridAdapter
+import adapters.GridPhotosAdapter
+import adapters.interfaces.GridPhotosListener
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -12,9 +13,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.omzer.photosviewer.R
 import kotlinx.android.synthetic.main.photos_grid_fragment.*
 import models.PhotoModel
+import utils.ImageUtils
 import viewmodels.PhotosGridViewModel
 
-class PhotosGridFragment : Fragment() {
+class PhotosGridFragment : Fragment(), GridPhotosListener {
 
     private lateinit var viewModel: PhotosGridViewModel
 
@@ -30,6 +32,7 @@ class PhotosGridFragment : Fragment() {
     }
 
     private fun init() {
+        requireActivity().setTitle(R.string.app_name)
         viewModel = ViewModelProvider(this).get(PhotosGridViewModel::class.java)
         setHasOptionsMenu(true)
     }
@@ -47,7 +50,7 @@ class PhotosGridFragment : Fragment() {
 
         // init recycler
         photosGrid.layoutManager = GridLayoutManager(context, 2)
-        photosGrid.adapter = PhotosGridAdapter(photos)
+        photosGrid.adapter = GridPhotosAdapter(photos, this)
     }
 
     private fun showSnackbar(message: String) {
@@ -62,5 +65,9 @@ class PhotosGridFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         (requireActivity() as MainActivity).showFragment(FavoritePhotosFragment(), true)
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPhotoClicked(photoModel: PhotoModel) {
+        context?.let { ImageUtils.viewFullScreenImage(it, photoModel.downloadUrl) }
     }
 }

@@ -1,5 +1,6 @@
 package viewholders
 
+import adapters.interfaces.GridPhotosListener
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -7,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import app.App
 import com.like.LikeButton
 import com.like.OnLikeListener
-import com.omzer.photosviewer.R
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.photo_card.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -17,17 +16,22 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import models.PhotoModel
 import room.PhotosDao
+import utils.ImageUtils
 
 
-class PhotosGridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class GridPhotosViewHolder(itemView: View, private val listener: GridPhotosListener) :
+    RecyclerView.ViewHolder(itemView) {
 
     companion object {
         private val db: PhotosDao = App.db.photosDao()
     }
 
+    private lateinit var photoModel: PhotoModel
+
     fun setData(photoModel: PhotoModel) {
-        setAuthor(photoModel.author)
-        setImage(photoModel.downloadUrl)
+        this.photoModel = photoModel
+        setAuthor()
+        setImage()
         setClickListener()
         CoroutineScope(IO).launch { setFavorite(photoModel) }
     }
@@ -42,18 +46,11 @@ class PhotosGridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         })
     }
 
-    private fun setAuthor(author: String) {
-        itemView.author.text = author
+    private fun setAuthor() {
+        itemView.author.text = photoModel.author
     }
 
-    private fun setImage(url: String) {
-        Picasso.get()
-            .load(url)
-            .centerCrop()
-            .resize(500, 500)
-            .placeholder(R.color.grey_purple)
-            .into(itemView.image)
-    }
+    private fun setImage() = ImageUtils.loadImage(photoModel.downloadUrl, itemView.image)
 
     private fun setClickListener() {
         itemView.setOnTouchListener(object : View.OnTouchListener {
@@ -78,7 +75,7 @@ class PhotosGridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         })
     }
 
-    private fun onViewSingleTapped() {}
+    private fun onViewSingleTapped() = listener.onPhotoClicked(photoModel)
 
     private fun onViewDoubleTapped() {
         itemView.favorite.performClick()

@@ -24,11 +24,12 @@ class App : Application() {
     }
 
     private fun initAPI() {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(PhotosAPI.apiBaseURL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-            .build()
+        val retrofit = Retrofit.Builder().apply {
+            baseUrl(PhotosAPI.apiBaseURL)
+            addConverterFactory(GsonConverterFactory.create())
+            addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+        }.build()
+
         api = retrofit.create(PhotosAPI::class.java)
     }
 

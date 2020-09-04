@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import app.App
 import com.like.LikeButton
 import com.like.OnLikeListener
-import com.omzer.photosviewer.R
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.photo_card.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -17,6 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import models.PhotoModel
 import room.PhotosDao
+import utils.PicassoUtils
 
 
 class GridPhotosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -46,14 +45,7 @@ class GridPhotosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.author.text = author
     }
 
-    private fun setImage(url: String) {
-        Picasso.get()
-            .load(url)
-            .fit()
-            .centerCrop()
-            .placeholder(R.color.grey_purple)
-            .into(itemView.image)
-    }
+    private fun setImage(url: String) = PicassoUtils.loadImage(url, itemView.image)
 
     private fun setClickListener() {
         itemView.setOnTouchListener(object : View.OnTouchListener {

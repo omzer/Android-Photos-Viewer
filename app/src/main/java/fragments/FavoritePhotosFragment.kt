@@ -16,6 +16,7 @@ import viewmodels.FavoritePhotosViewModel
 class FavoritePhotosFragment : Fragment() {
 
     private lateinit var viewModel: FavoritePhotosViewModel
+    private lateinit var adapter: FavoritePhotosAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, b: Bundle?): View? {
         init()
@@ -31,13 +32,19 @@ class FavoritePhotosFragment : Fragment() {
             } else {
                 emptyState.visibility = View.GONE
                 photosList.layoutManager = LinearLayoutManager(context)
-                photosList.adapter = FavoritePhotosAdapter(list, requireActivity())
+                adapter.setPhotos(list)
+                photosList.adapter = adapter
             }
         })
+
+        adapter.listEmptyState.observe(
+            this,
+            Observer { if (it) emptyState.visibility = View.VISIBLE })
     }
 
     private fun init() {
         requireActivity().setTitle(R.string.favorite_photos_title)
+        adapter = FavoritePhotosAdapter(requireActivity())
         viewModel = ViewModelProvider(this).get(FavoritePhotosViewModel::class.java)
     }
 }

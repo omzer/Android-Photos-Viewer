@@ -23,14 +23,16 @@
 
         <TextView
             android:id="@+id/author"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="bottom|start"
             android:background="@color/black_with_opacity"
-            android:gravity="center"
+            android:gravity="start"
             android:padding="2dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="2dp"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="16sp"
             tools:text="Omar Sabri" />
 
         <View

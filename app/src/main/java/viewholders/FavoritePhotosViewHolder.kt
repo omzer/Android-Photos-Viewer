@@ -1,7 +1,5 @@
 package viewholders
 
-import android.view.GestureDetector
-import android.view.MotionEvent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import app.App
@@ -28,7 +26,6 @@ class FavoritePhotosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
     fun setData(photoModel: PhotoModel) {
         setAuthor(photoModel.author)
         setImage(photoModel.downloadUrl)
-        setClickListener()
         CoroutineScope(IO).launch { setFavorite(photoModel) }
     }
 
@@ -49,39 +46,10 @@ class FavoritePhotosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
     private fun setImage(url: String) {
         Picasso.get()
             .load(url)
+            .fit()
             .centerCrop()
-            .resize(500, 500)
             .placeholder(R.color.grey_purple)
             .into(itemView.image)
-    }
-
-    private fun setClickListener() {
-        itemView.setOnTouchListener(object : View.OnTouchListener {
-            val gestureDetector = GestureDetector(
-                App.instance.baseContext,
-                object : GestureDetector.SimpleOnGestureListener() {
-                    override fun onDoubleTap(e: MotionEvent?): Boolean {
-                        onViewDoubleTapped()
-                        return super.onDoubleTap(e)
-                    }
-
-                    override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
-                        onViewSingleTapped()
-                        return super.onSingleTapConfirmed(e)
-                    }
-                })
-
-            override fun onTouch(v: View?, event: MotionEvent): Boolean {
-                gestureDetector.onTouchEvent(event)
-                return true
-            }
-        })
-    }
-
-    private fun onViewSingleTapped() {}
-
-    private fun onViewDoubleTapped() {
-        itemView.favorite.performClick()
     }
 
     private fun onFavoriteAdded(photoModel: PhotoModel) {

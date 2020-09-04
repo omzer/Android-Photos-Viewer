@@ -49,8 +49,8 @@ class GridPhotosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private fun setImage(url: String) {
         Picasso.get()
             .load(url)
+            .fit()
             .centerCrop()
-            .resize(500, 500)
             .placeholder(R.color.grey_purple)
             .into(itemView.image)
     }

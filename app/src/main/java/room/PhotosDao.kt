@@ -1,13 +1,7 @@
 package room
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import androidx.room.*
 import models.PhotoModel
-import retrofit2.http.DELETE
 
 @Dao
 interface PhotosDao {
@@ -20,7 +14,7 @@ interface PhotosDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPhoto(vararg photo: PhotoModel)
 
-    @DELETE
-    suspend fun deletePhoto(photo: PhotoModel) = withContext(Dispatchers.IO) {}
+    @Delete
+    suspend fun deletePhoto(photo: PhotoModel): Int?
 
 }

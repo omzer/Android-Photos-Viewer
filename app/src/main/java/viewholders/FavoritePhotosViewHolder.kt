@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import models.PhotoModel
 import room.PhotosDao
-import utils.PicassoUtils
+import utils.ImageUtils
 
 
 class FavoritePhotosViewHolder(
@@ -46,7 +46,7 @@ class FavoritePhotosViewHolder(
         itemView.author.text = author
     }
 
-    private fun setImage(url: String) = PicassoUtils.loadImage(url, itemView.image)
+    private fun setImage(url: String) = ImageUtils.loadImage(url, itemView.image)
 
     private fun onFavoriteAdded(photoModel: PhotoModel) {
         CoroutineScope(IO).launch { db.insertPhoto(photoModel) }

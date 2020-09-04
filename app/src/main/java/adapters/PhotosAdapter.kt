@@ -11,7 +11,7 @@ import models.PhotoModel
 import tyrantgit.explosionfield.ExplosionField
 import viewholders.PhotosGridViewHolder
 
-class PhotosGridAdapter(private var photos: List<PhotoModel>, private val activity: Activity) :
+class PhotosAdapter(private var photos: List<PhotoModel>, private val activity: Activity) :
     RecyclerView.Adapter<PhotosGridViewHolder>() {
 
     fun removeItem(position: Int, photosGrid: RecyclerView) {

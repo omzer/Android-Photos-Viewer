@@ -2,5 +2,5 @@
     <string name="app_name">Photos Viewer</string>
     <string name="favorite_photos_title">Favorite Photos</string>
     <string name="empty_favorite_explanation">No favorite photos added yet</string>
-    <string name="connection_issue">There might be a connection issue, please try again later.\nNote that you still can browse the downloaded images.</string>
+    <string name="connection_issue">No connection, but you still can check local images.</string>
 </resources>

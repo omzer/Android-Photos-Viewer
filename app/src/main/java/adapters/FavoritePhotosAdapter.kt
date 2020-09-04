@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.omzer.photosviewer.R
 import models.PhotoModel
 import tyrantgit.explosionfield.ExplosionField
-import viewholders.PhotosGridViewHolder
+import viewholders.GridPhotosViewHolder
 
-class PhotosAdapter(private var photos: List<PhotoModel>, private val activity: Activity) :
-    RecyclerView.Adapter<PhotosGridViewHolder>() {
+class FavoritePhotosAdapter(private var photos: List<PhotoModel>, private val activity: Activity) :
+    RecyclerView.Adapter<GridPhotosViewHolder>() {
 
     fun removeItem(position: Int, photosGrid: RecyclerView) {
         val newList: MutableList<PhotoModel> = cloneToMutable()
@@ -30,15 +30,15 @@ class PhotosAdapter(private var photos: List<PhotoModel>, private val activity: 
         diffResult.dispatchUpdatesTo(this)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotosGridViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GridPhotosViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view: View = inflater.inflate(R.layout.photo_card, parent, false)
-        return PhotosGridViewHolder(view)
+        val view: View = inflater.inflate(R.layout.favorite_photo_card, parent, false)
+        return GridPhotosViewHolder(view)
     }
 
     override fun getItemCount(): Int = photos.size
 
-    override fun onBindViewHolder(holder: PhotosGridViewHolder, i: Int) = holder.setData(photos[i])
+    override fun onBindViewHolder(holder: GridPhotosViewHolder, i: Int) = holder.setData(photos[i])
 
     private fun cloneToMutable(): MutableList<PhotoModel> {
         val list: MutableList<PhotoModel> = mutableListOf()

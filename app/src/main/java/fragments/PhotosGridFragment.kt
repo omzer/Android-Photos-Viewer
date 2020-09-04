@@ -1,7 +1,7 @@
 package fragments
 
 import activities.MainActivity
-import adapters.PhotosAdapter
+import adapters.GridPhotosAdapter
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -48,7 +48,7 @@ class PhotosGridFragment : Fragment() {
 
         // init recycler
         photosGrid.layoutManager = GridLayoutManager(context, 2)
-        photosGrid.adapter = PhotosAdapter(photos, requireActivity())
+        photosGrid.adapter = GridPhotosAdapter(photos)
     }
 
     private fun showSnackbar(message: String) {

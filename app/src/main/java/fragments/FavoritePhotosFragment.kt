@@ -1,6 +1,6 @@
 package fragments
 
-import adapters.PhotosAdapter
+import adapters.FavoritePhotosAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,7 +31,7 @@ class FavoritePhotosFragment : Fragment() {
             } else {
                 emptyState.visibility = View.GONE
                 photosList.layoutManager = LinearLayoutManager(context)
-                photosList.adapter = PhotosAdapter(list, requireActivity())
+                photosList.adapter = FavoritePhotosAdapter(list, requireActivity())
             }
         })
     }

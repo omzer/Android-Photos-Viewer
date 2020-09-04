@@ -19,7 +19,7 @@ import models.PhotoModel
 import room.PhotosDao
 
 
-class PhotosGridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class FavoritePhotosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     companion object {
         private val db: PhotosDao = App.db.photosDao()

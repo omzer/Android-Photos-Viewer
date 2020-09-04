@@ -47,7 +47,7 @@ class PhotosGridFragment : Fragment() {
 
         // init recycler
         photosGrid.layoutManager = GridLayoutManager(context, 2)
-        photosGrid.adapter = PhotosGridAdapter(photos)
+        photosGrid.adapter = PhotosGridAdapter(photos, requireActivity())
     }
 
     private fun showSnackbar(message: String) {

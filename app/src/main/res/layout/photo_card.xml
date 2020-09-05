@@ -33,14 +33,13 @@
             android:textSize="14sp"
             tools:text="Omar Sabri" />
 
-        <View
+        <ImageView
             android:id="@+id/favorite_background"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_gravity="top|right"
-            android:background="@color/black_with_opacity"
-            android:rotation="45"
-            android:translationX="40dp" />
+            android:rotation="90"
+            android:src="@drawable/triangle" />
 
         <com.like.LikeButton
             android:id="@+id/favorite"

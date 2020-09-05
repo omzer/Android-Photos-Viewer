@@ -55,6 +55,7 @@ class PhotosGridFragment : Fragment(), GridPhotosListener {
         // init recycler
         photosGrid.layoutManager = GridLayoutManager(context, 2)
         photosGrid.adapter = GridPhotosAdapter(photos, this)
+        onResume()
     }
 
     private fun showSnackbar(message: String) {
@@ -72,7 +73,7 @@ class PhotosGridFragment : Fragment(), GridPhotosListener {
     }
 
     override fun onPhotoClicked(photoModel: PhotoModel) {
-        MainActivity.showFragment(PhotoViewFragment(), true)
+        MainActivity.showFragment(PhotoViewFragment(photoModel), true)
     }
 
     override fun onResume() {

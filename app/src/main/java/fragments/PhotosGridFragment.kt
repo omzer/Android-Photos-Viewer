@@ -1,6 +1,5 @@
 package fragments
 
-import activities.MainActivity
 import adapters.GridPhotosAdapter
 import adapters.interfaces.GridPhotosListener
 import android.os.Bundle
@@ -12,8 +11,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.omzer.photosviewer.R
 import kotlinx.android.synthetic.main.photos_grid_fragment.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import models.PhotoModel
-import utils.ImageUtils
+import utils.NavigationUtils
 import viewmodels.PhotosGridViewModel
 
 class PhotosGridFragment : Fragment(), GridPhotosListener {
@@ -32,7 +36,6 @@ class PhotosGridFragment : Fragment(), GridPhotosListener {
     }
 
     private fun init() {
-        requireActivity().setTitle(R.string.app_name)
         viewModel = ViewModelProvider(this).get(PhotosGridViewModel::class.java)
         setHasOptionsMenu(true)
     }
@@ -51,6 +54,7 @@ class PhotosGridFragment : Fragment(), GridPhotosListener {
         // init recycler
         photosGrid.layoutManager = GridLayoutManager(context, 2)
         photosGrid.adapter = GridPhotosAdapter(photos, this)
+        onResume()
     }
 
     private fun showSnackbar(message: String) {
@@ -63,11 +67,21 @@ class PhotosGridFragment : Fragment(), GridPhotosListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        (requireActivity() as MainActivity).showFragment(FavoritePhotosFragment(), true)
+        NavigationUtils.showFragment(FavoritePhotosFragment(), true, requireActivity())
         return super.onOptionsItemSelected(item)
     }
 
     override fun onPhotoClicked(photoModel: PhotoModel) {
-        context?.let { ImageUtils.viewFullScreenImage(it, photoModel.downloadUrl) }
+        NavigationUtils.showFragment(PhotoViewFragment(photoModel), true, requireActivity())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().setTitle(R.string.app_name)
+        photosGrid.adapter?.let {
+            CoroutineScope(IO).launch {
+                withContext(Main) { (it as GridPhotosAdapter).checkFavorite() }
+            }
+        }
     }
 }

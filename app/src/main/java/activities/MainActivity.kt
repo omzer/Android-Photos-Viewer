@@ -5,26 +5,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.omzer.photosviewer.R
 import fragments.PhotosGridFragment
+import utils.NavigationUtils
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        showFragment(PhotosGridFragment(), false)
+        NavigationUtils.showFragment(PhotosGridFragment(), false, this)
     }
 
-    fun showFragment(fragment: Fragment, addToBackStack: Boolean) {
-        val manager = supportFragmentManager
-        val transaction = manager.beginTransaction()
-        transaction.setCustomAnimations(
-            android.R.anim.slide_in_left,
-            android.R.anim.slide_out_right
-        )
-        transaction.replace(R.id.rootLayout, fragment, fragment.javaClass.name)
-        if (addToBackStack) transaction.addToBackStack(fragment.javaClass.name)
-
-        if (!supportFragmentManager.isDestroyed) transaction.commit()
+    override fun onResume() {
+        super.onResume()
+        supportFragmentManager.addOnBackStackChangedListener {
+            val fragment: Fragment? = supportFragmentManager.findFragmentById(R.id.rootLayout)
+            fragment?.onResume()
+        }
     }
-
 }

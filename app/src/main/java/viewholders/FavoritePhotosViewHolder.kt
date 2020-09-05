@@ -29,13 +29,11 @@ class FavoritePhotosViewHolder(
     fun setData(photoModel: PhotoModel) {
         setAuthor(photoModel.author)
         setImage(photoModel.downloadUrl)
-        CoroutineScope(IO).launch { setFavorite(photoModel) }
+        setFavorite(photoModel)
     }
 
-    private suspend fun setFavorite(photoModel: PhotoModel) {
-        withContext(Main) {
-            itemView.favorite.isLiked = db.getPhoto(photoModel.id) != null
-        }
+    private fun setFavorite(photoModel: PhotoModel) {
+        itemView.favorite.isLiked = true
         itemView.favorite.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton?) = onFavoriteAdded(photoModel)
             override fun unLiked(likeButton: LikeButton?) = onFavoriteRemoved(photoModel)

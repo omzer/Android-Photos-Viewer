@@ -33,13 +33,13 @@
             android:textSize="14sp"
             tools:text="Omar Sabri" />
 
-        <View
-            android:layout_width="100dp"
-            android:layout_height="40dp"
+        <ImageView
+            android:id="@+id/favorite_background"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_gravity="top|right"
-            android:background="@color/black_with_opacity"
-            android:rotation="45"
-            android:translationX="40dp" />
+            android:rotation="90"
+            android:src="@drawable/triangle" />
 
         <com.like.LikeButton
             android:id="@+id/favorite"
@@ -49,6 +49,7 @@
             android:layout_margin="2dp"
             app:icon_size="8dp"
             app:icon_type="star" />
+
     </FrameLayout>
 
 </androidx.cardview.widget.CardView>

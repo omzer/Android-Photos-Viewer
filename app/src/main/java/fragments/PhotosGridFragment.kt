@@ -36,7 +36,6 @@ class PhotosGridFragment : Fragment(), GridPhotosListener {
     }
 
     private fun init() {
-        requireActivity().setTitle(R.string.app_name)
         viewModel = ViewModelProvider(this).get(PhotosGridViewModel::class.java)
         setHasOptionsMenu(true)
     }
@@ -78,6 +77,7 @@ class PhotosGridFragment : Fragment(), GridPhotosListener {
 
     override fun onResume() {
         super.onResume()
+        requireActivity().setTitle(R.string.app_name)
         photosGrid.adapter?.let {
             CoroutineScope(IO).launch {
                 withContext(Main) { (it as GridPhotosAdapter).checkFavorite() }

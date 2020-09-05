@@ -40,6 +40,7 @@ class GridPhotosViewHolder(itemView: View, private val listener: GridPhotosListe
             override fun liked(likeButton: LikeButton?) = onFavoriteAdded(photoModel)
             override fun unLiked(likeButton: LikeButton?) = onFavoriteRemoved(photoModel)
         })
+        itemView.favorite_background.setOnClickListener { itemView.favorite.performClick() }
     }
 
     private fun setAuthor() {

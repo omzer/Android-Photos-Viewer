@@ -1,7 +1,7 @@
 package fragments
 
 import adapters.GridPhotosAdapter
-import adapters.interfaces.GridPhotosListener
+import adapters.interfaces.PhotosListener
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -20,7 +20,7 @@ import models.PhotoModel
 import utils.NavigationUtils
 import viewmodels.PhotosGridViewModel
 
-class PhotosGridFragment : Fragment(), GridPhotosListener {
+class PhotosFragment : Fragment(), PhotosListener {
 
     private lateinit var viewModel: PhotosGridViewModel
 

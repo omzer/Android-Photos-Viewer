@@ -1,6 +1,6 @@
 package viewholders
 
-import adapters.interfaces.GridPhotosListener
+import adapters.interfaces.PhotosListener
 import android.annotation.SuppressLint
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -18,7 +18,7 @@ import room.PhotosDao
 import utils.ImageUtils
 
 
-class GridPhotosViewHolder(itemView: View, private val listener: GridPhotosListener) :
+class GridPhotosViewHolder(itemView: View, private val listener: PhotosListener) :
     RecyclerView.ViewHolder(itemView) {
 
     companion object {

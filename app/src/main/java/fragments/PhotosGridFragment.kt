@@ -1,6 +1,5 @@
 package fragments
 
-import activities.MainActivity
 import adapters.GridPhotosAdapter
 import adapters.interfaces.GridPhotosListener
 import android.os.Bundle
@@ -18,6 +17,7 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import models.PhotoModel
+import utils.NavigationUtils
 import viewmodels.PhotosGridViewModel
 
 class PhotosGridFragment : Fragment(), GridPhotosListener {
@@ -68,12 +68,12 @@ class PhotosGridFragment : Fragment(), GridPhotosListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        MainActivity.showFragment(FavoritePhotosFragment(), true)
+        NavigationUtils.showFragment(FavoritePhotosFragment(), true, requireActivity())
         return super.onOptionsItemSelected(item)
     }
 
     override fun onPhotoClicked(photoModel: PhotoModel) {
-        MainActivity.showFragment(PhotoViewFragment(photoModel), true)
+        NavigationUtils.showFragment(PhotoViewFragment(photoModel), true, requireActivity())
     }
 
     override fun onResume() {

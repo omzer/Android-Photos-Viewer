@@ -44,6 +44,7 @@ class FavoritePhotosAdapter(private val activity: Activity) :
     }
 
     override fun favoriteRemoved(position: Int, view: View) {
+        if (position >= photos.size) return
         val newList: MutableList<PhotoModel> = photos.cloneMutableList()
         val oldList = photos
         newList.removeAt(position)

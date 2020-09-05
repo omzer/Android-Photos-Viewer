@@ -2,6 +2,6 @@ package adapters.interfaces
 
 import models.PhotoModel
 
-interface GridPhotosListener {
+interface PhotosListener {
     fun onPhotoClicked(photoModel: PhotoModel)
 }

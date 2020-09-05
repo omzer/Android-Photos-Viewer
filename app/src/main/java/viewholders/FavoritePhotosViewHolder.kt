@@ -1,6 +1,7 @@
 package viewholders
 
 import adapters.interfaces.FavoriteRemovedListener
+import adapters.interfaces.PhotosListener
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import app.App
@@ -26,16 +27,17 @@ class FavoritePhotosViewHolder(
         private val db: PhotosDao = App.db.photosDao()
     }
 
-    fun setData(photoModel: PhotoModel) {
+    fun setData(photoModel: PhotoModel, listener: PhotosListener) {
         setAuthor(photoModel.author)
         setImage(photoModel.downloadUrl)
         setFavorite(photoModel)
+        itemView.image.setOnClickListener { listener.onPhotoClicked(photoModel) }
     }
 
     private fun setFavorite(photoModel: PhotoModel) {
         itemView.favorite.isLiked = true
         itemView.favorite.setOnLikeListener(object : OnLikeListener {
-            override fun liked(likeButton: LikeButton?) = onFavoriteAdded(photoModel)
+            override fun liked(likeButton: LikeButton?) = Unit
             override fun unLiked(likeButton: LikeButton?) = onFavoriteRemoved(photoModel)
         })
     }
@@ -45,10 +47,6 @@ class FavoritePhotosViewHolder(
     }
 
     private fun setImage(url: String) = ImageUtils.loadImage(url, itemView.image)
-
-    private fun onFavoriteAdded(photoModel: PhotoModel) {
-        CoroutineScope(IO).launch { db.insertPhoto(photoModel) }
-    }
 
     private fun onFavoriteRemoved(photoModel: PhotoModel) {
         CoroutineScope(IO).launch {

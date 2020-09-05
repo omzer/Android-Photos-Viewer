@@ -1,6 +1,6 @@
 package adapters
 
-import adapters.interfaces.GridPhotosListener
+import adapters.interfaces.PhotosListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +14,7 @@ import viewholders.GridPhotosViewHolder
 
 class GridPhotosAdapter(
     private var photos: List<PhotoModel>,
-    private val listener: GridPhotosListener
+    private val listener: PhotosListener
 ) :
     RecyclerView.Adapter<GridPhotosViewHolder>() {
 

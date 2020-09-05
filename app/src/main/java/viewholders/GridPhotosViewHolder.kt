@@ -1,6 +1,7 @@
 package viewholders
 
-import adapters.interfaces.GridPhotosListener
+import adapters.interfaces.PhotosListener
+import android.annotation.SuppressLint
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -17,7 +18,7 @@ import room.PhotosDao
 import utils.ImageUtils
 
 
-class GridPhotosViewHolder(itemView: View, private val listener: GridPhotosListener) :
+class GridPhotosViewHolder(itemView: View, private val listener: PhotosListener) :
     RecyclerView.ViewHolder(itemView) {
 
     companion object {
@@ -35,7 +36,7 @@ class GridPhotosViewHolder(itemView: View, private val listener: GridPhotosListe
     }
 
     private fun setFavorite(photoModel: PhotoModel) {
-        itemView.favorite.isLiked = photoModel.isFavorite
+        photoModel.isFavorite?.let { itemView.favorite.isLiked = it }
         itemView.favorite.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton?) = onFavoriteAdded(photoModel)
             override fun unLiked(likeButton: LikeButton?) = onFavoriteRemoved(photoModel)
@@ -63,8 +64,10 @@ class GridPhotosViewHolder(itemView: View, private val listener: GridPhotosListe
                         onViewSingleTapped()
                         return super.onSingleTapConfirmed(e)
                     }
-                })
+                }
+            )
 
+            @SuppressLint("ClickableViewAccessibility")
             override fun onTouch(v: View?, event: MotionEvent): Boolean {
                 gestureDetector.onTouchEvent(event)
                 return true

@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.omzer.photosviewer.R
-import fragments.PhotosGridFragment
+import fragments.PhotosFragment
 import utils.NavigationUtils
 
 class MainActivity : AppCompatActivity() {
@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        NavigationUtils.showFragment(PhotosGridFragment(), false, this)
+        NavigationUtils.showFragment(PhotosFragment(), false, this)
     }
 
     override fun onResume() {

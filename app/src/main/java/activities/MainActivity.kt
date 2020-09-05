@@ -16,6 +16,14 @@ class MainActivity : AppCompatActivity() {
         showFragment(PhotosGridFragment(), false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        supportFragmentManager.addOnBackStackChangedListener {
+            val fragment: Fragment? = supportFragmentManager.findFragmentById(R.id.rootLayout)
+            fragment?.onResume()
+        }
+    }
+
     companion object {
         private lateinit var fragmentManager: FragmentManager
 
@@ -26,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                 android.R.anim.slide_in_left,
                 android.R.anim.slide_out_right
             )
-            transaction.replace(R.id.rootLayout, fragment, fragment.javaClass.name)
+            transaction.add(R.id.rootLayout, fragment, fragment.javaClass.name)
             if (addToBackStack) transaction.addToBackStack(fragment.javaClass.name)
 
             if (!fragmentManager.isDestroyed) transaction.commit()

@@ -4,9 +4,12 @@ import adapters.interfaces.GridPhotosListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import app.App
 import com.omzer.photosviewer.R
 import models.PhotoModel
+import utils.cloneMutableList
 import viewholders.GridPhotosViewHolder
 
 class GridPhotosAdapter(
@@ -25,4 +28,22 @@ class GridPhotosAdapter(
 
     override fun onBindViewHolder(holder: GridPhotosViewHolder, i: Int) = holder.setData(photos[i])
 
+    suspend fun checkFavorite() {
+        val oldList = photos
+        val newList = photos.cloneMutableList()
+        for (photo in newList) {
+            photo.isFavorite = App.db.photosDao().getPhoto(photo.id) != null
+        }
+
+        val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(
+            PhotosDiffCallback(oldList, newList)
+        )
+
+        this.photos = newList
+        diffResult.dispatchUpdatesTo(this)
+    }
 }
+
+
+
+

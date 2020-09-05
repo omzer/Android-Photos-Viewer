@@ -11,9 +11,7 @@ import com.like.OnLikeListener
 import kotlinx.android.synthetic.main.photo_card.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import models.PhotoModel
 import room.PhotosDao
 import utils.ImageUtils
@@ -33,13 +31,11 @@ class GridPhotosViewHolder(itemView: View, private val listener: GridPhotosListe
         setAuthor()
         setImage()
         setClickListener()
-        CoroutineScope(IO).launch { setFavorite(photoModel) }
+        setFavorite(photoModel)
     }
 
-    private suspend fun setFavorite(photoModel: PhotoModel) {
-        withContext(Main) {
-            itemView.favorite.isLiked = db.getPhoto(photoModel.id) != null
-        }
+    private fun setFavorite(photoModel: PhotoModel) {
+        itemView.favorite.isLiked = photoModel.isFavorite
         itemView.favorite.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton?) = onFavoriteAdded(photoModel)
             override fun unLiked(likeButton: LikeButton?) = onFavoriteRemoved(photoModel)
@@ -83,10 +79,12 @@ class GridPhotosViewHolder(itemView: View, private val listener: GridPhotosListe
 
     private fun onFavoriteAdded(photoModel: PhotoModel) {
         CoroutineScope(IO).launch { db.insertPhoto(photoModel) }
+        photoModel.isFavorite = true
     }
 
     private fun onFavoriteRemoved(photoModel: PhotoModel) {
         CoroutineScope(IO).launch { db.deletePhoto(photoModel) }
+        photoModel.isFavorite = false
     }
 
 }

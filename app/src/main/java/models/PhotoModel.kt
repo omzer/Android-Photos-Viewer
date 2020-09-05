@@ -12,8 +12,8 @@ data class PhotoModel(
     @ColumnInfo(name = "width") @SerializedName("width") val width: Int,
     @ColumnInfo(name = "height") @SerializedName("height") val height: Int,
     @ColumnInfo(name = "url") @SerializedName("url") val url: String,
-    @ColumnInfo(name = "download_url") @SerializedName("download_url") val downloadUrl: String
-
+    @ColumnInfo(name = "download_url") @SerializedName("download_url") val downloadUrl: String,
+    var isFavorite: Boolean = false
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -27,6 +27,7 @@ data class PhotoModel(
         if (height != other.height) return false
         if (url != other.url) return false
         if (downloadUrl != other.downloadUrl) return false
+        if (isFavorite != other.isFavorite) return false
 
         return true
     }

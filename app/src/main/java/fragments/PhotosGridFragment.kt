@@ -12,6 +12,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.omzer.photosviewer.R
 import kotlinx.android.synthetic.main.photos_grid_fragment.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import models.PhotoModel
 import viewmodels.PhotosGridViewModel
 
@@ -68,5 +73,14 @@ class PhotosGridFragment : Fragment(), GridPhotosListener {
 
     override fun onPhotoClicked(photoModel: PhotoModel) {
         MainActivity.showFragment(PhotoViewFragment(), true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        photosGrid.adapter?.let {
+            CoroutineScope(IO).launch {
+                withContext(Main) { (it as GridPhotosAdapter).checkFavorite() }
+            }
+        }
     }
 }

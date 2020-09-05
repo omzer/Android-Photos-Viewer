@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import models.PhotoModel
 import tyrantgit.explosionfield.ExplosionField
+import utils.cloneMutableList
 import viewholders.FavoritePhotosViewHolder
 
 class FavoritePhotosAdapter(private val activity: Activity) :
@@ -42,31 +43,8 @@ class FavoritePhotosAdapter(private val activity: Activity) :
         holder.setData(photos[i])
     }
 
-    private fun cloneToMutable(): MutableList<PhotoModel> {
-        val list: MutableList<PhotoModel> = mutableListOf()
-        for (photo in photos) list.add(photo)
-        return list
-    }
-
-    class PhotosDiffCallback(
-        private var oldList: List<PhotoModel>,
-        private var newList: List<PhotoModel>
-    ) : DiffUtil.Callback() {
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition].id == newList[newItemPosition].id
-        }
-
-        override fun getOldListSize(): Int = oldList.size
-
-        override fun getNewListSize(): Int = newList.size
-
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition] == newList[newItemPosition]
-        }
-    }
-
     override fun favoriteRemoved(position: Int, view: View) {
-        val newList: MutableList<PhotoModel> = cloneToMutable()
+        val newList: MutableList<PhotoModel> = photos.cloneMutableList()
         val oldList = photos
         newList.removeAt(position)
 

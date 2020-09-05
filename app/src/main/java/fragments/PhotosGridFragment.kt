@@ -13,7 +13,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.omzer.photosviewer.R
 import kotlinx.android.synthetic.main.photos_grid_fragment.*
 import models.PhotoModel
-import utils.ImageUtils
 import viewmodels.PhotosGridViewModel
 
 class PhotosGridFragment : Fragment(), GridPhotosListener {
@@ -63,11 +62,11 @@ class PhotosGridFragment : Fragment(), GridPhotosListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        (requireActivity() as MainActivity).showFragment(FavoritePhotosFragment(), true)
+        MainActivity.showFragment(FavoritePhotosFragment(), true)
         return super.onOptionsItemSelected(item)
     }
 
     override fun onPhotoClicked(photoModel: PhotoModel) {
-        context?.let { ImageUtils.viewFullScreenImage(it, photoModel.downloadUrl) }
+        MainActivity.showFragment(PhotoViewFragment(), true)
     }
 }

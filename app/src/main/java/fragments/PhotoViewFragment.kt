@@ -1,9 +1,7 @@
 package fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import app.App
 import com.like.LikeButton
@@ -33,6 +31,7 @@ class PhotoViewFragment(private val photo: PhotoModel) : Fragment() {
 
     private fun init() {
         requireActivity().setTitle(R.string.app_name)
+        setHasOptionsMenu(true)
         ImageUtils.loadImage(photo.downloadUrl, img)
         img.setOnClickListener {
             ImageUtils.viewFullScreenImage(
@@ -72,4 +71,8 @@ class PhotoViewFragment(private val photo: PhotoModel) : Fragment() {
         withContext(Main) { setFavoriteText() }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.getItem(0).isVisible = false
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 }

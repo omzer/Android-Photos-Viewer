@@ -2,9 +2,7 @@ package fragments
 
 import adapters.FavoritePhotosAdapter
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -43,8 +41,14 @@ class FavoritePhotosFragment : Fragment() {
     }
 
     private fun init() {
+        setHasOptionsMenu(true)
         requireActivity().setTitle(R.string.favorite_photos_title)
         adapter = FavoritePhotosAdapter(requireActivity())
         viewModel = ViewModelProvider(this).get(FavoritePhotosViewModel::class.java)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.getItem(0).isVisible = false
+        super.onCreateOptionsMenu(menu, inflater)
     }
 }

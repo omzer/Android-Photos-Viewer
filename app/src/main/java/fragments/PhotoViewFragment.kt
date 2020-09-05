@@ -1,5 +1,7 @@
 package fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -16,6 +18,7 @@ import kotlinx.coroutines.withContext
 import models.PhotoModel
 import utils.ImageUtils
 
+
 class PhotoViewFragment(private val photo: PhotoModel) : Fragment() {
 
     private val db = App.db.photosDao()
@@ -27,20 +30,23 @@ class PhotoViewFragment(private val photo: PhotoModel) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        addClickListeners()
+        setData()
+        CoroutineScope(IO).launch { checkFavoriteStatus() }
     }
 
     private fun init() {
         requireActivity().setTitle(R.string.app_name)
         setHasOptionsMenu(true)
+    }
+
+    private fun setData() {
         ImageUtils.loadImage(photo.downloadUrl, img)
-        img.setOnClickListener {
-            ImageUtils.viewFullScreenImage(
-                requireContext(),
-                photo.downloadUrl
-            )
-        }
         author.text = photo.author
         dimens.text = "${photo.width} X ${photo.height}"
+    }
+
+    private fun addClickListeners() {
         favorite.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
                 CoroutineScope(IO).launch {
@@ -56,7 +62,22 @@ class PhotoViewFragment(private val photo: PhotoModel) : Fragment() {
                 }
             }
         })
-        CoroutineScope(IO).launch { checkFavoriteStatus() }
+
+        img.setOnClickListener {
+            ImageUtils.viewFullScreenImage(
+                requireContext(),
+                photo.downloadUrl
+            )
+        }
+
+        website.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(photo.url)
+            startActivity(intent)
+        }
+        website_background.setOnClickListener { website.performClick() }
+
+
     }
 
     private fun setFavoriteText() {

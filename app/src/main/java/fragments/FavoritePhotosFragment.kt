@@ -22,7 +22,6 @@ class FavoritePhotosFragment : Fragment(), PhotosListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, b: Bundle?): View? {
         init()
         observeChanges()
-        viewModel.requestFavoritePhotos()
         return inflater.inflate(R.layout.favorite_photos_fragment, container, false)
     }
 
@@ -57,5 +56,10 @@ class FavoritePhotosFragment : Fragment(), PhotosListener {
 
     override fun onPhotoClicked(photoModel: PhotoModel) {
         NavigationUtils.showFragment(PhotoViewFragment(photoModel), true, requireActivity())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.requestFavoritePhotos()
     }
 }

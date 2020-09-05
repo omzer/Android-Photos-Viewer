@@ -41,7 +41,7 @@ class FavoritePhotosAdapter(private val activity: Activity, private val listener
     override fun getItemCount(): Int = photos.size
 
     override fun onBindViewHolder(holder: FavoritePhotosViewHolder, i: Int) {
-        holder.setData(photos[i],listener)
+        holder.setData(photos[i], listener)
     }
 
     override fun favoriteRemoved(position: Int, view: View) {

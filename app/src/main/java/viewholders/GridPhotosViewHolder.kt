@@ -1,6 +1,7 @@
 package viewholders
 
 import adapters.interfaces.GridPhotosListener
+import android.annotation.SuppressLint
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -63,8 +64,10 @@ class GridPhotosViewHolder(itemView: View, private val listener: GridPhotosListe
                         onViewSingleTapped()
                         return super.onSingleTapConfirmed(e)
                     }
-                })
+                }
+            )
 
+            @SuppressLint("ClickableViewAccessibility")
             override fun onTouch(v: View?, event: MotionEvent): Boolean {
                 gestureDetector.onTouchEvent(event)
                 return true

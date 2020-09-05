@@ -36,7 +36,7 @@ class GridPhotosViewHolder(itemView: View, private val listener: GridPhotosListe
     }
 
     private fun setFavorite(photoModel: PhotoModel) {
-        itemView.favorite.isLiked = photoModel.isFavorite
+        photoModel.isFavorite?.let { itemView.favorite.isLiked = it }
         itemView.favorite.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton?) = onFavoriteAdded(photoModel)
             override fun unLiked(likeButton: LikeButton?) = onFavoriteRemoved(photoModel)

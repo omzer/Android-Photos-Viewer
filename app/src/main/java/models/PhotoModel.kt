@@ -13,7 +13,7 @@ data class PhotoModel(
     @ColumnInfo(name = "height") @SerializedName("height") val height: Int,
     @ColumnInfo(name = "url") @SerializedName("url") val url: String,
     @ColumnInfo(name = "download_url") @SerializedName("download_url") val downloadUrl: String,
-    var isFavorite: Boolean = false
+    var isFavorite: Boolean? = null
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

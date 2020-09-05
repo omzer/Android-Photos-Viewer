@@ -1,6 +1,7 @@
 package adapters
 
 import adapters.interfaces.FavoriteRemovedListener
+import adapters.interfaces.PhotosListener
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,7 @@ import tyrantgit.explosionfield.ExplosionField
 import utils.cloneMutableList
 import viewholders.FavoritePhotosViewHolder
 
-class FavoritePhotosAdapter(private val activity: Activity) :
+class FavoritePhotosAdapter(private val activity: Activity, private val listener: PhotosListener) :
     RecyclerView.Adapter<FavoritePhotosViewHolder>(),
     FavoriteRemovedListener {
 
@@ -40,7 +41,7 @@ class FavoritePhotosAdapter(private val activity: Activity) :
     override fun getItemCount(): Int = photos.size
 
     override fun onBindViewHolder(holder: FavoritePhotosViewHolder, i: Int) {
-        holder.setData(photos[i])
+        holder.setData(photos[i],listener)
     }
 
     override fun favoriteRemoved(position: Int, view: View) {

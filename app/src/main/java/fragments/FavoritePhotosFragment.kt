@@ -1,6 +1,7 @@
 package fragments
 
 import adapters.FavoritePhotosAdapter
+import adapters.interfaces.PhotosListener
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -9,9 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omzer.photosviewer.R
 import kotlinx.android.synthetic.main.favorite_photos_fragment.*
+import models.PhotoModel
+import utils.NavigationUtils
 import viewmodels.FavoritePhotosViewModel
 
-class FavoritePhotosFragment : Fragment() {
+class FavoritePhotosFragment : Fragment(), PhotosListener {
 
     private lateinit var viewModel: FavoritePhotosViewModel
     private lateinit var adapter: FavoritePhotosAdapter
@@ -43,12 +46,16 @@ class FavoritePhotosFragment : Fragment() {
     private fun init() {
         setHasOptionsMenu(true)
         requireActivity().setTitle(R.string.favorite_photos_title)
-        adapter = FavoritePhotosAdapter(requireActivity())
+        adapter = FavoritePhotosAdapter(requireActivity(), this)
         viewModel = ViewModelProvider(this).get(FavoritePhotosViewModel::class.java)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.getItem(0).isVisible = false
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onPhotoClicked(photoModel: PhotoModel) {
+        NavigationUtils.showFragment(PhotoViewFragment(photoModel), true, requireActivity())
     }
 }

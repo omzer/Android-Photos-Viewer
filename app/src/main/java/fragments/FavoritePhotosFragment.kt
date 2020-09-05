@@ -27,14 +27,10 @@ class FavoritePhotosFragment : Fragment(), PhotosListener {
 
     private fun observeChanges() {
         viewModel.listObserver.observe(this, Observer { list ->
-            if (list.isEmpty()) {
-                emptyState.visibility = View.VISIBLE
-            } else {
-                emptyState.visibility = View.GONE
-                photosList.layoutManager = LinearLayoutManager(context)
-                adapter.setPhotos(list)
-                photosList.adapter = adapter
-            }
+            emptyState.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+            photosList.layoutManager = LinearLayoutManager(context)
+            adapter.setPhotos(list)
+            photosList.adapter = adapter
         })
 
         adapter.listEmptyState.observe(
